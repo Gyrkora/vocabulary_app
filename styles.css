@@ -78,6 +78,12 @@ textarea p {
     color: black;
 }
 
+@media (max-width: 600px) {
+    textarea {
+        width: 90%;
+    }
+}
+
 
 
 
