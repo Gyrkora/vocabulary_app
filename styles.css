@@ -1,0 +1,256 @@
+:root {
+    --primary: #b84f4f;
+    --accent: #c6f000;
+    --background-dark: #f4f4f4;
+    --text-light: #ffffff;
+    --neutral-dark: #333333;
+  }
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    /* height: 100vh;  */
+    display: flex;
+    justify-content: center; 
+
+ 
+    background-color: #615555; /* Optional: background color */
+}
+
+h1 {
+    color: var(--primary);
+    font-size: 2.5rem;
+
+}
+
+.font-white {
+    color: white;
+  }
+
+
+h2, h3 {
+    color: var(--primary);
+}
+
+
+
+
+textarea {
+    width: 100%;
+    height: 150px;
+    border: 2px solid #bd1212;
+    border-radius: 8px;
+    /* padding: 1rem; */
+    font-size: 1rem;
+    color: var(--neutral-dark);
+    background: #e8d6d6;
+  }
+
+textarea p {
+    color: black;
+}
+
+
+.vocab-list {
+    padding: 1rem;   
+  }
+
+#vocabulary-list li  {
+   
+    background-color: #e8d6d6;
+}
+
+
+input, button {
+    margin: 5px 0;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+button {
+    background-color: var(--primary);
+
+     
+    color: var(--text-light);
+    border: none;
+    /* padding: 10px 20px; */
+    padding: 1rem;
+    /* padding: 0.5rem 1rem; */
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background 0.3s;
+}
+
+
+
+ul {
+    padding: 0;
+    list-style-type: none;
+
+   
+}
+
+
+
+.vocab-list-container ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    
+}
+
+.vocab-list-container ul li {
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    width: 200px;
+    height: 150px;
+    font-size: 18px;
+    border-radius: 10%;
+
+    box-shadow: -2px 7px 10px -5px rgba(0,0,0,0.75);
+-webkit-box-shadow: -2px 7px 10px -5px rgba(0,0,0,0.75);
+-moz-box-shadow: -2px 7px 10px -5px rgba(0,0,0,0.75);
+ 
+}
+
+.vocab-list-container ul button {
+   max-width: 30%;
+   padding: 0;
+   margin-bottom: 20px;
+}
+
+
+
+#main-page, #flashcard-page {
+    width: 100%;
+    max-width: 800px;
+    text-align: center; /* Center text and elements inside */
+    padding: 20px;
+    background: white; /* Optional: white background for content */
+    border-radius: 10px; /* Optional: rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow */
+    background-color: #dbadad;   
+}
+
+
+
+/* FLASHCARDS */
+
+#flashcard-container {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; 
+    gap: 5px;  
+    
+
+}
+
+
+.flashcard {
+    /* perspective: 1000px; */
+    width: 200px;
+    height: 150px;
+    margin: 20px auto;
+    position: relative;
+    cursor: pointer;
+    font-size: 20px;
+
+ 
+  
+}
+
+.flashcard-inner {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    position: relative;
+
+}
+
+.flipped .flashcard-inner {
+    transform: rotateY(180deg);
+}
+
+
+.flashcard-front,
+.flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: -2px 7px 10px -5px rgba(0,0,0,0.75);
+    -webkit-box-shadow: -2px 7px 10px -5px rgba(0,0,0,0.75);
+    -moz-box-shadow: -2px 7px 10px -5px rgba(0,0,0,0.75);
+     
+}
+.flashcard-front {
+    background-color: #e8d6d6;;
+    color: black;
+}
+.flashcard-back {
+    background-color: var(--primary);
+    transform: rotateY(180deg);
+    color: white;
+}
+.hidden {
+    display: none;
+}
+
+.pronounce-btn-flashcards {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 0;
+    max-width: 40%;
+    margin-top: 20px;
+    border: solid black 1px;
+    background-color: rgb(255, 255, 255);
+
+    /* color: #007BFF; */
+}
+
+
+
+
+
+
+
+.container-games {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+footer {
+    margin-top: 100px;
+}
+
+
+@media only screen and (min-width: 600px) {
+    .container-games {
+        flex-direction: row;
+        gap: 10px;
+    }
+}
