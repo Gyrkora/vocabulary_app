@@ -42,24 +42,41 @@ export function importXML(vocabulary, updateList, updateStoredXML, storedXML) {
         return;
     }
 
+    // Limit file size to 1MB to prevent DoS
+    if (file.size > 1024 * 1024) {
+        alert('File is too large. Please select a file smaller.');
+        return;
+    }
+
     const reader = new FileReader();
     reader.onload = function (e) {
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(e.target.result, 'application/xml');
-        const entries = xmlDoc.getElementsByTagName('ENTRY');
+        try {
+            // Parse the XML securely
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(e.target.result, 'application/xml');
 
-        for (let i = 0; i < entries.length; i++) {
-            const word = entries[i].getElementsByTagName('CONCEPT')[0].textContent;
-            const definition = entries[i].getElementsByTagName('DEFINITION')[0].textContent;
-
-            if (!vocabulary.some(entry => entry.word === word)) {
-                vocabulary.push({ word, definition });
+            // Check for parsing errors
+            if (xmlDoc.getElementsByTagName('parsererror').length > 0) {
+                throw new Error('Error parsing XML file.');
             }
-        }
 
-        updateList(vocabulary); // Refresh the vocabulary list
-        storedXML = updateStoredXML(vocabulary); // Update stored XML with imported data
-        alert('Vocabulary imported successfully!');
+            const entries = xmlDoc.getElementsByTagName('ENTRY');
+            for (let i = 0; i < entries.length; i++) {
+                const word = entries[i].getElementsByTagName('CONCEPT')[0]?.textContent?.trim();
+                const definition = entries[i].getElementsByTagName('DEFINITION')[0]?.textContent?.trim();
+
+                // Validate the structure and content of the XML
+                if (word && definition && !vocabulary.some(entry => entry.word === word)) {
+                    vocabulary.push({ word, definition });
+                }
+            }
+
+            updateList(vocabulary); // Refresh the vocabulary list
+            storedXML = updateStoredXML(vocabulary); // Update stored XML with imported data
+            alert('Vocabulary imported successfully!');
+        } catch (error) {
+            alert(`Failed to import XML: ${error.message}`);
+        }
     };
 
     reader.readAsText(file);
