@@ -1,12 +1,12 @@
-import { getVocabulary } from './../main.js';
+
+import { getVocabularyFromLocalStorage } from "../utilities.js";
 
 let currentQuestionIndex = 0;
 let score = 0;
 let shuffledVocabulary = [];
 
-
 export function startQuiz() {
-    const vocabulary = getVocabulary(); // Get a copy of the vocabulary
+    const vocabulary = getVocabularyFromLocalStorage(); // Get vocabulary from localStorage
     if (vocabulary.length < 3) {
         alert("You need at least 3 words in your vocabulary to start the quiz!");
         return;
@@ -23,23 +23,24 @@ export function startQuiz() {
     showQuestion();
 }
 
+
 function showQuestion() {
     const question = shuffledVocabulary[currentQuestionIndex];
-    const correctAnswer = question.definition;
+    const correctAnswer = DOMPurify.sanitize(question.definition);
 
     // Generate incorrect choices
-    let options = getVocabulary()
+    let options = shuffledVocabulary
         .filter(v => v.word !== question.word) // Exclude the correct word
         .sort(() => 0.5 - Math.random()) // Shuffle the remaining entries
         .slice(0, 2) // Pick two random entries for incorrect choices
-        .map(v => v.definition); // Get definitions of incorrect choices
+        .map(v => DOMPurify.sanitize(v.definition)); // Get definitions of incorrect choices
 
     // Add the correct answer and shuffle the options
     options.push(correctAnswer);
     options = options.sort(() => 0.5 - Math.random());
 
     // Display the question and options in the interface
-    document.getElementById('quiz-question').textContent = `What is the definition of "${question.word}"?`;
+    document.getElementById('quiz-question').textContent = `What is the definition of "${DOMPurify.sanitize(question.word)}"?`;
     const quizOptions = document.getElementById('quiz-options');
     quizOptions.innerHTML = ''; // Clear previous options
 

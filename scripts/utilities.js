@@ -23,57 +23,76 @@ export function pronounceWord(word) {
 
         window.speechSynthesis.speak(utterance);
     } else {
-        alert("Sorry, your browser doesn't support text-to-speech. Choose Chrome");
+        alert("Sorry, your browser doesn't support text-to-speech. Use Chrome");
     }
 }
 
-export function updateList(vocabulary) {
-    const list = document.getElementById('vocabulary-list');
+// Updates the list of vocabulary items on the main page
+function updateVocabularyList(vocabulary) {
+    const list = document.getElementById('vocabulary-list'); // se adhiere al "ul"
     list.innerHTML = ''; // Clear the list
 
     vocabulary.forEach(entry => {
         const listItem = document.createElement('li');
-        listItem.style.position = "relative"; // Optional, to better control placement of children
+        listItem.textContent = `${DOMPurify.sanitize(entry.word)}: ${DOMPurify.sanitize(entry.definition)}`;
+        list.appendChild(listItem);
 
-        // Pronounce button
+        // Pronounce button on flashcard front
         const pronounceButton = document.createElement('button');
         pronounceButton.textContent = '🔊';
-        pronounceButton.className = 'pronounce-btn-vocab-list';
-        pronounceButton.addEventListener('click', () => pronounceWord(entry.word));
-        listItem.appendChild(pronounceButton); // Append button first
+        pronounceButton.className = 'pronounce-btn-vocabylary-list';
+        pronounceButton.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent flip when pressing the button
+            pronounceWord(entry.word);
+        });
+        listItem.appendChild(pronounceButton);
+        });
 
-        // Word text
-        const wordText = document.createElement('p');
-        wordText.textContent = `${entry.word}: ${entry.definition}`;
-        listItem.appendChild(wordText); // Append the text below the button
+    
 
-        list.appendChild(listItem);
-    });
+  
 }
 
 
 
-export function addBatchEntries(vocabulary, batchInput, updateList, updateStoredXML) {
+// Adds batch entries from user input
+function addBatchEntries(vocabulary, batchInput, updateList) {
     if (!batchInput) {
         alert('Please enter some entries.');
         return;
     }
 
     const lines = batchInput.split('\n');
-
     lines.forEach(line => {
-        const [word, definition] = line.split(':').map(item => item.trim());
+        const [word, definition] = line.split(':').map(item => DOMPurify.sanitize(item.trim()));
         if (word && definition && !vocabulary.some(entry => entry.word === word)) {
-            // Sanitize the word and definition to prevent XSS attacks
-            const sanitizedWord = DOMPurify.sanitize(word);
-            const sanitizedDefinition = DOMPurify.sanitize(definition);
-            vocabulary.push({ word: sanitizedWord, definition: sanitizedDefinition });
+            vocabulary.push({ word, definition });
         }
     });
 
-    updateList(vocabulary);
-    updateStoredXML(vocabulary);
-   
+    updateList(vocabulary); // Refresh the vocabulary list
 }
 
+export { updateVocabularyList, addBatchEntries };
 
+
+export function getVocabularyFromLocalStorage() {
+    const storedVocabulary = localStorage.getItem('vocabulary');
+    if (storedVocabulary) {
+        return JSON.parse(storedVocabulary);
+    }
+    return [];
+}
+
+export function clearVocabulary() {
+    localStorage.removeItem('vocabulary'); // Removes only the 'vocabulary' item from localStorage
+    
+    // Optionally, clear the UI components
+    document.getElementById('vocabulary-list').innerHTML = '';
+    document.getElementById('flashcard-container').innerHTML = '';
+}
+
+// Set up event listener to clear the vocabulary
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('clear-vocabulary-btn').addEventListener('click', clearVocabulary);
+});

@@ -1,4 +1,5 @@
-import { pronounceWord } from "../utilities.js";
+import { pronounceWord } from '../utilities.js';
+
 export function generateFlashcards(flashcards) {
     const container = document.getElementById('flashcard-container');
     container.innerHTML = ''; // Clear existing flashcards
@@ -15,10 +16,9 @@ export function generateFlashcards(flashcards) {
             card.classList.toggle('flipped');
         });
 
-
         const cardFront = document.createElement('div');
         cardFront.className = 'flashcard-front';
-        cardFront.textContent = entry.word;
+        cardFront.textContent = DOMPurify.sanitize(entry.word);
 
         // Pronounce button on flashcard front
         const pronounceButton = document.createElement('button');
@@ -32,7 +32,7 @@ export function generateFlashcards(flashcards) {
 
         const cardBack = document.createElement('div');
         cardBack.className = 'flashcard-back';
-        cardBack.textContent = entry.definition;
+        cardBack.textContent = DOMPurify.sanitize(entry.definition);
 
         cardInner.appendChild(cardFront);
         cardInner.appendChild(cardBack);
