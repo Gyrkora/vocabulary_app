@@ -1,11 +1,12 @@
-import {vocabulary} from './../main.js';
-
+import { getVocabulary } from './../main.js';
 
 let currentQuestionIndex = 0;
 let score = 0;
 let shuffledVocabulary = [];
 
+
 export function startQuiz() {
+    const vocabulary = getVocabulary(); // Get a copy of the vocabulary
     if (vocabulary.length < 3) {
         alert("You need at least 3 words in your vocabulary to start the quiz!");
         return;
@@ -27,7 +28,7 @@ function showQuestion() {
     const correctAnswer = question.definition;
 
     // Generate incorrect choices
-    let options = vocabulary
+    let options = getVocabulary()
         .filter(v => v.word !== question.word) // Exclude the correct word
         .sort(() => 0.5 - Math.random()) // Shuffle the remaining entries
         .slice(0, 2) // Pick two random entries for incorrect choices

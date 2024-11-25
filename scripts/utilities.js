@@ -5,9 +5,7 @@ function detectLanguage(word) {
     } 
     else (/[áéíóúñÁÉÍÓÚÑ]/.test(word)) 
         return 'es-ES'; // Spanish
-    // } else {
-    //     return 'en-US'; // Default to English
-    // }
+ 
 }
 
 export function pronounceWord(word) {
@@ -66,7 +64,10 @@ export function addBatchEntries(vocabulary, batchInput, updateList, updateStored
     lines.forEach(line => {
         const [word, definition] = line.split(':').map(item => item.trim());
         if (word && definition && !vocabulary.some(entry => entry.word === word)) {
-            vocabulary.push({ word, definition });
+            // Sanitize the word and definition to prevent XSS attacks
+            const sanitizedWord = DOMPurify.sanitize(word);
+            const sanitizedDefinition = DOMPurify.sanitize(definition);
+            vocabulary.push({ word: sanitizedWord, definition: sanitizedDefinition });
         }
     });
 
