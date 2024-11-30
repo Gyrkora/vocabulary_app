@@ -25,8 +25,24 @@ export function generateFlashcards(flashcards) {
         pronounceButton.textContent = '🔊';
         pronounceButton.className = 'pronounce-btn-flashcards';
         pronounceButton.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent flip when pressing the button
-            pronounceWord(entry.word);
+            if (container.classList.contains('pron-en')) {
+
+                e.stopPropagation(); // Prevent flip when pressing the button 
+                pronounceWord(entry.word, 'en');
+            } else if (container.classList.contains('pron-es')) {
+                e.stopPropagation(); // Prevent flip when pressing the button
+                pronounceWord(entry.word, 'es');
+            } else if (container.classList.contains('pron-ru')) {
+                e.stopPropagation(); // Prevent flip when pressing the button
+                pronounceWord(entry.word, 'ru');
+            }
+
+            else {
+
+                console.log('this pronunciation not available.');
+
+
+            }
         });
         cardFront.appendChild(pronounceButton);
 

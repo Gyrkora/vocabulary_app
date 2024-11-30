@@ -41,8 +41,9 @@ function getVocabularyFromTextarea() {
     function goToFlashcards() {
         document.getElementById('main-page').classList.add('hidden');
         document.getElementById('flashcard-page').classList.remove('hidden');
-       
+
     }
+
 
     function goToMain() {
         document.getElementById('main-page').classList.remove('hidden');
@@ -51,10 +52,15 @@ function getVocabularyFromTextarea() {
 
     // Set up event listeners after the DOM is loaded
     document.addEventListener('DOMContentLoaded', () => {
+
+
+
         document.getElementById('add-batch-btn').addEventListener('click', () => {
             getVocabularyFromTextarea(); // This will save vocabulary to localStorage and update lists
             document.getElementById('batch-input').value = '';
         });
+
+
 
         document.getElementById('go-to-flashcards-btn').addEventListener('click', goToFlashcards);
         document.getElementById('go-to-main-btn').addEventListener('click', goToMain);
