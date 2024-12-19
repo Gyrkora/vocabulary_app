@@ -16,10 +16,6 @@
     <title>Vocabulary App</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
-    <!-- <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-      rel="stylesheet"
-    /> -->
   </head>
 
   <body>
@@ -87,6 +83,16 @@ palabra:definición (una por linea)"
         <button id="quiz-next-btn" class="hidden">Next Question</button>
       </div>
       <button id="end-quiz-btn">End Quiz</button>
+
+      <div id="quiz-modal" class="modal hidden">
+        <div class="modal-content">
+          <span id="close-modal" class="close">&times;</span>
+          <h2 id="modal-title"></h2>
+          <p id="modal-message"></p>
+          <button id="modal-next-btn" class="modal-btn">Next</button>
+        </div>
+      </div>
+
       <footer class="font-white">
         <p>
           <i
