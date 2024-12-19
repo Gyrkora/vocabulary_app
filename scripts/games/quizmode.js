@@ -36,7 +36,7 @@ function showQuestion() {
     options.push(correctAnswer);
     options = options.sort(() => 0.5 - Math.random());
 
-    document.getElementById('quiz-question').textContent = `What is the definition of "${DOMPurify.sanitize(question.word)}"?`;
+    document.getElementById('quiz-question').innerHTML = `What is the definition of <strong class='quiz-word'>"${DOMPurify.sanitize(question.word)}"</strong>?`;
     const quizOptions = document.getElementById('quiz-options');
     quizOptions.innerHTML = '';
 
@@ -53,8 +53,8 @@ function showQuestion() {
 
 function handleAnswerSelection(selectedAnswer, correctAnswer) {
     const isCorrect = selectedAnswer === correctAnswer;
-    const title = isCorrect ? "🎉 Correct!" : "❌ Wrong!";
-    const message = isCorrect ? "Good job! Keep it up!" : `The correct answer was: <strong>${correctAnswer}</strong>`;
+    const title = isCorrect ? "🎉 Correcto!" : "❌ Incorrecto 😬!";
+    const message = isCorrect ? "¡Super!" : `La alternativa correcta es: <strong>${correctAnswer}</strong>`;
 
     if (isCorrect) score++;
 
