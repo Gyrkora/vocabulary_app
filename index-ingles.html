@@ -16,10 +16,10 @@
     <title>Vocabulary App</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
-    <!-- <link
+    <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
       rel="stylesheet"
-    /> -->
+    />
   </head>
 
   <body>
@@ -29,6 +29,7 @@
         <a href="index.html">Español</a>
         <a href="index-ingles.html">English</a>
         <a href="index-ruso.html">Русский</a>
+        <a href="index-portugues.html">Português</a>
       </div>
       <h1>Your vocabulary</h1>
       <p>Learn and practice your English vocabulary.</p>
@@ -47,6 +48,7 @@ word:definition (one per line)"
       <div class="container-games">
         <button id="go-to-flashcards-btn">Flashcards</button>
         <button id="start-quiz-btn">Quiz</button>
+        <button id="go-to-crossword-btn" disabled>Crossword (soon)</button>
       </div>
 
       <h2 class="vocab-list">Vocabulary list</h2>
@@ -75,6 +77,23 @@ word:definition (one per line)"
           <i
             >© 2024 - Developed by @gyrkora for
             <strong>The Other Way Spanish</strong>. All rights reserved.</i
+          >
+        </p>
+      </footer>
+    </div>
+
+    <div id="crossword-page" class="hidden">
+      <h1>Crossword</h1>
+      <button id="go-to-main-from-crossword-btn">Back to Main Page</button>
+      <div id="crossword-container"></div>
+      <div id="crossword-clues"></div>
+
+      <footer class="font-white">
+        <p>
+          <i
+            >© 2024 - Desarrollado por @gyrkora para
+            <strong>The Other Way Spanish</strong>. Todos los derechos
+            reservados.</i
           >
         </p>
       </footer>

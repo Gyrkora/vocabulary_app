@@ -1,6 +1,8 @@
 import { updateVocabularyList, getVocabularyFromLocalStorage, clearVocabulary } from './utilities.js';
 import { generateFlashcards } from './games/flashcards.js';
 import { startQuiz } from './games/quizmode.js';
+import { startCrossword } from './games/crossword.js';
+
 
 function getVocabularyFromTextarea() {
     const textareaValue = document.getElementById('batch-input').value.trim();
@@ -58,6 +60,19 @@ function getVocabularyFromTextarea() {
         document.getElementById('add-batch-btn').addEventListener('click', () => {
             getVocabularyFromTextarea(); // This will save vocabulary to localStorage and update lists
             document.getElementById('batch-input').value = '';
+        });
+
+
+        document.getElementById('go-to-crossword-btn').addEventListener('click', () => {
+            document.getElementById('main-page').classList.add('hidden');
+            document.getElementById('crossword-page').classList.remove('hidden');
+            startCrossword();
+        });
+
+
+        document.getElementById('go-to-main-from-crossword-btn').addEventListener('click', () => {
+            document.getElementById('crossword-page').classList.add('hidden');
+            document.getElementById('main-page').classList.remove('hidden');
         });
 
 

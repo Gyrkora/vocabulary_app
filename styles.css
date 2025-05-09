@@ -87,7 +87,9 @@ textarea p {
 }
 
 
-
+#go-to-crossword-btn {
+    background-color: #6a6a6a;
+}
 
 
 ul {
@@ -423,4 +425,29 @@ footer {
     margin-top: 50px;
     background-color: #890909;
     border-radius: 20px;
+}
+
+
+.crossword-grid {
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.crossword-grid td {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #333;
+    text-align: center;
+}
+
+.active-cell input {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    border: none;
+    font-size: 18px;
+}
+
+.inactive-cell {
+    background-color: #333;
 }
