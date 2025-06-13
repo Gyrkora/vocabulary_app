@@ -1,7 +1,8 @@
 import { updateVocabularyList, getVocabularyFromLocalStorage, clearVocabulary } from './utilities.js';
 import { generateFlashcards } from './games/flashcards.js';
 import { startQuiz } from './games/quizmode.js';
-import { startCrossword } from './games/crossword.js';
+import { startCrossword, checkCrossword } from './games/crossword.js';
+
 
 
 function getVocabularyFromTextarea() {
@@ -69,6 +70,8 @@ function getVocabularyFromTextarea() {
             startCrossword();
         });
 
+
+        document.getElementById('check-crossword-btn').addEventListener('click', checkCrossword);
 
         document.getElementById('go-to-main-from-crossword-btn').addEventListener('click', () => {
             document.getElementById('crossword-page').classList.add('hidden');

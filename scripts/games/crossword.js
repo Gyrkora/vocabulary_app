@@ -21,15 +21,34 @@ function createEmptyGrid() {
 function canPlaceWord(word, row, col, direction) {
     if (direction === 'across') {
         if (col + word.length > GRID_SIZE) return false;
+        if (col > 0 && grid[row][col - 1] !== '') return false;
+        if (col + word.length < GRID_SIZE && grid[row][col + word.length] !== '') return false;
     } else { // 'down'
         if (row + word.length > GRID_SIZE) return false;
+        if (row > 0 && grid[row - 1][col] !== '') return false;
+        if (row + word.length < GRID_SIZE && grid[row + word.length][col] !== '') return false;
     }
+
     for (let i = 0; i < word.length; i++) {
         let r = row, c = col;
         if (direction === 'across') c += i; else r += i;
-        if (grid[r][c] !== '' && grid[r][c] !== word[i]) {
+        // if (grid[r][c] !== '' && grid[r][c] !== word[i]) {
+        const current = grid[r][c];
+        if (current !== '' && current !== word[i]) {
             return false;
         }
+
+        if (current === '') {
+            if (direction === 'across') {
+                if (r > 0 && grid[r - 1][c] !== '') return false;
+                if (r < GRID_SIZE - 1 && grid[r + 1][c] !== '') return false;
+            } else {
+                if (c > 0 && grid[r][c - 1] !== '') return false;
+                if (c < GRID_SIZE - 1 && grid[r][c + 1] !== '') return false;
+            }
+        }
+
+
     }
     return true;
 }
@@ -205,8 +224,10 @@ export function startCrossword() {
                     clueSpan.style.position = 'absolute';
                     clueSpan.style.top = '0';
                     clueSpan.style.left = '0';
-                    clueSpan.style.fontSize = '0.6em';
+                    clueSpan.style.fontSize = '25px';
                     clueSpan.style.color = 'red';
+                    clueSpan.style.fontWeight = 'bold';
+
                     cellContainer.appendChild(clueSpan);
                 }
 
@@ -325,4 +346,43 @@ export function startCrossword() {
     });
 
     // (Optional) You can add a "Check Crossword" button here to validate user input.
+}
+
+
+// Verify if the crossword has been correctly completed. Each cell
+// corresponding to a placement must match the expected letter. If all
+// letters are correct, a congratulatory alert is shown. Otherwise we
+// inform the user that some letters are incorrect.
+export function checkCrossword() {
+    const inputs = document.querySelectorAll('#crossword-container input.crossword-input');
+    inputs.forEach(inp => {
+        inp.classList.remove('correct-letter', 'incorrect-letter');
+    });
+
+    let allCorrect = true;
+    for (const p of placements) {
+        for (let i = 0; i < p.word.length; i++) {
+            let r = p.row, c = p.col;
+            if (p.direction === 'across') c += i; else r += i;
+            const input = document.querySelector(
+                `input[data-grid-row="${r}"][data-grid-col="${c}"]`
+            );
+            if (input) {
+                if (input.value.toUpperCase() === p.word[i]) {
+                    input.classList.add('correct-letter');
+                } else {
+                    input.classList.add('incorrect-letter');
+                    allCorrect = false;
+                }
+            }
+        }
+    }
+
+    if (allCorrect) {
+        console.log('Congratulations! Crossword solved correctly.');
+    } else {
+        console.log('Some letters are incorrect.');
+
+    }
+    return allCorrect;
 }
