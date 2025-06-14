@@ -224,7 +224,7 @@ export function startCrossword() {
                     clueSpan.style.position = 'absolute';
                     clueSpan.style.top = '0';
                     clueSpan.style.left = '0';
-                    clueSpan.style.fontSize = '25px';
+                    // clueSpan.style.fontSize = '25px';
                     clueSpan.style.color = 'red';
                     clueSpan.style.fontWeight = 'bold';
 
