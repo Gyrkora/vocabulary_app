@@ -493,14 +493,15 @@ footer {
     padding: 0 !important;
 }
 
-@media (min-width: 780px) {
-    #crossword-clues {
+@media (min-width: 1024px) {
+    /* #crossword-clues {
         position: absolute;
         top: 50%;
-        right: 70%;
+        right: 60%;
         transform: translateX(-50%);
         font-size: 20px;
-    }
+    } */
+
 
     .active-cell input {
         font-size: 30px;
