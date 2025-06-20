@@ -65,7 +65,18 @@ function removeWord(word, row, col, direction) {
     for (let i = 0; i < word.length; i++) {
         let r = row, c = col;
         if (direction === 'across') c += i; else r += i;
-        if (grid[r][c] === word[i]) {
+
+        const shared = placements.slice(0, -1).some(p => {
+            if (p.direction === 'across') {
+                return r === p.row && c >= p.col && c < p.col + p.word.length;
+            } else {
+                return c === p.col && r >= p.row && r < p.row + p.word.length;
+            }
+        });
+
+
+        if (!shared && grid[r][c] === word[i]) {
+
             grid[r][c] = '';
         }
     }
@@ -217,9 +228,13 @@ export function startCrossword() {
                 // Check if this cell is the start of any placement.
                 const startingPlacements = placements.filter(p => p.row === r && p.col === c);
                 if (startingPlacements.length > 0) {
-                    const clueNumber = Math.min(...startingPlacements.map(p => p.id));
+                    // const clueNumber = Math.min(...startingPlacements.map(p => p.id));
+                    const clueNumbers = startingPlacements.map(p => p.id).join(',');
+
                     const clueSpan = document.createElement('span');
-                    clueSpan.textContent = clueNumber;
+                    // clueSpan.textContent = clueNumber;
+                    clueSpan.textContent = clueNumbers;
+
                     clueSpan.className = 'clue-number';
                     clueSpan.style.position = 'absolute';
                     clueSpan.style.top = '0';
